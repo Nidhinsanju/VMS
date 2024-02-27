@@ -17,7 +17,7 @@ function App() {
         <RecoilRoot>
           <Router>
             <Routes>
-              <Route path="/login" element={<Login />}></Route>
+              <Route path="/" element={<Login />}></Route>
               <Route path="/dashboard" element={<Dashboard />}></Route>
               <Route path="/secuirtycheck" element={<SecurityCheck />}></Route>
             </Routes>

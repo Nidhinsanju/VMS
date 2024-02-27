@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Details from "../Hooks/fetchDetails";
 
@@ -7,20 +7,52 @@ export default function Dashboard() {
   const [Vehiclenum, setVehiclenum] = useState("");
   const [DC, setDC] = useState("");
   const [PO, setPO] = useState("");
+  const [data, setData] = useState("");
+
+  const SubmitData = async () => {
+    try {
+      const res = await Details(PO, DC, Vehiclenum);
+      setData(res.data.POnumber);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const ImageUpload = (e) => {
+    const rawimage = e.target.files && e.target.files[0];
+    if (rawimage) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(rawimage);
+    }
+  };
 
   return (
     <div>
       <form
         className="max-w-md mx-auto mt-10"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
       >
         <input
-          className="block w-1/2 text-sm text-gray-900 border  border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+          className="block w-1/2 text-sm text-gray-900     cursor-pointer  focus:outline-none "
           aria-describedby="user_avatar_help"
-          id="user_avatar"
+          accept="image/*"
           type="file"
+          onChange={ImageUpload}
         />
         <div className="mt-1 text-sm text-black">Vehicle Photo</div>
+        <figure className="mt-10 flex border max-h-72 max-w-85">
+          {image ? (
+            <div className="border  p-2 h-15 overflow-hidden">
+              <img src={image} alt="image" className="h-32 w-32" />
+            </div>
+          ) : null}
+        </figure>
         <div className="relative z-0 w-full mb-5 group mt-8 text-black">
           <input
             type="text"
@@ -79,14 +111,30 @@ export default function Dashboard() {
 
         <button
           type="submit"
-          onClick={() => {
-            Details(PO, DC, Vehiclenum);
-          }}
+          onClick={() => SubmitData()}
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Submit
         </button>
       </form>
+      {data ? <Display data={data} /> : <Display />}
     </div>
   );
+}
+
+function Display(props) {
+  const data = props.data;
+  if (data) {
+    return (
+      <div>
+        <p>Vendor Name: {data?.Vendor_Name}</p>
+        <p>Purchase Order: {data?.Purchase_Order}</p>
+        <p>Company Name: {data?.Vendor_company_name}</p>
+        <p>Product List: {data?.Vehicle_Number}</p>
+        <div>
+          <p>Processing....</p>
+        </div>
+      </div>
+    );
+  }
 }
