@@ -97,4 +97,25 @@ router.put("/dashboard/checkin/", async (req, res) => {
   }
 });
 
+router.put("/checkout", async (req, res) => {
+  const { CustomerID } = req.body;
+  try {
+    const vehicle = await Vehicles.findOne({ CustomerID: CustomerID });
+    if (vehicle) {
+      const vehicle = await Vehicles.findOneAndDelete({
+        CustomerID: CustomerID,
+      });
+      const user = await User.findOne({ CustomerID: CustomerID });
+      user.Check_IN = false;
+      await user.save();
+      return res.status(200).json({ message: "Checked out successfully" });
+    } else {
+      return res.status(404).json({ message: "No details found for this ID" });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 export default router;

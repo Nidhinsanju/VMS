@@ -8,13 +8,13 @@ function Login() {
   const [password, setpassword] = useState("");
   const navigate = useNavigate();
   return (
-    <div className="border border-black m-3">
-      <form className="max-w-sm mx-auto" onSubmit={(e) => e.preventDefault()}>
-        Join US
+    <div className="min-w-2/4 max-w-lg mx-auto  mt-28 bg-white border border-blue-300  rounded-lg flex flex-col shadow items-center justify-center  p-12 ">
+      <form className="space-y-5 w-full" onSubmit={(e) => e.preventDefault()}>
+        <p className="flex font-semibold text-xl ">Join us</p>
         <div className="mb-5">
           <label
             htmlFor="email"
-            className="block mb-2 text-sm font-medium text-black"
+            className="block mb-2 text-md font-medium text-black"
           >
             Your email
           </label>
@@ -32,7 +32,7 @@ function Login() {
         <div className="mb-5">
           <label
             htmlFor="password"
-            className="block mb-2 text-sm font-medium text-black"
+            className="block mb-2 text-md font-medium text-black"
           >
             Your password
           </label>

@@ -65,6 +65,7 @@ export default function Dashboard() {
         <div>
           <h2>{presentStatus}</h2>
           <h1>hi</h1>
+
           <a href="/">
             <LogoutButton />
           </a>
@@ -72,21 +73,21 @@ export default function Dashboard() {
       );
     }
     return (
-      <div>
+      <div className="mt-10  p-10">
         <form
           className="max-w-md mx-auto mt-10"
           onSubmit={(e) => {
             e.preventDefault();
           }}
         >
+          <div className="mt-1 text-sm text-black ">Upload Photo</div>
           <input
-            className="block w-1/2 text-sm text-gray-900     cursor-pointer  focus:outline-none "
+            className="block w-1/2 text-sm text-gray-900  cursor-pointer  focus:outline-none"
             aria-describedby="user_avatar_help"
             accept="image/*"
             type="file"
             onChange={ImageUpload}
           />
-          <div className="mt-1 text-sm text-black">Vehicle Photo</div>
           <figure className="mt-10 flex border max-h-72 max-w-85">
             {image ? (
               <div className="border  p-2 h-15 overflow-hidden">
@@ -176,7 +177,16 @@ function Display(props) {
         <p>Vendor Name: {data?.Vendor_Name}</p>
         <p>Purchase Order: {data?.Purchase_Order}</p>
         <p>Company Name: {data?.Vendor_company_name}</p>
-        <p>Product List: {data?.Vehicle_Number}</p>
+        <p>
+          Product List:{" "}
+          {data?.Products.map((product) => {
+            return (
+              <div>
+                <h1>{product.Product_Name}</h1>
+              </div>
+            );
+          })}
+        </p>
         <div>
           <p>Processing....</p>
         </div>
