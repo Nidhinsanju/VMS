@@ -1,97 +1,191 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Admin_URL } from "../Constents/AdminUrl";
+import { LogoutButton } from "../utis/LogoutButton";
 export default function SecurityCheck() {
-  
+  const [PO_number, setPO_number] = useState("");
+  const [data, SetData] = useState("");
+  const [count, setCount] = useState(0);
+  const token = localStorage.getItem("token");
+  const handleCheckboxClick = (isChecked) => {
+    setCount((prevCount) => (isChecked ? prevCount + 1 : prevCount - 1));
+  };
+
   return (
     <div>
+      Entry Purchase Order Number
+      <input
+        type="text"
+        id="email"
+        className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/5 p-2.5"
+        placeholder="123"
+        onChange={(e) => {
+          setPO_number(e.target.value);
+        }}
+        required
+      />
       <fieldset className="text-black">
         <legend className="sr-only text-black">Checkbox variants</legend>
-        <div className="flex items-center mb-4">
-          <input
-            checked
-            id="checkbox-1"
-            type="checkbox"
-            value=""
-            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-          />
-          <label
-            for="checkbox-1"
-            className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
-          >
-            I agree to the{" "}
-            <a
-              href="#"
-              className="text-blue-600 hover:underline dark:text-blue-500"
-            >
-              terms and conditions
-            </a>
-            .
-          </label>
-        </div>
-
         <div className="flex items-center mb-4">
           <input
             id="checkbox-2"
             type="checkbox"
             value=""
+            onChange={(e) => handleCheckboxClick(e.target.checked)}
             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
           />
           <label
-            for="checkbox-2"
+            htmlFor="checkbox-2"
             className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
           >
             I want to get promotional offers
           </label>
         </div>
-
         <div className="flex items-center mb-4">
           <input
-            id="checkbox-3"
+            id="checkbox-2"
             type="checkbox"
             value=""
+            onChange={(e) => handleCheckboxClick(e.target.checked)}
             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
           />
           <label
-            for="checkbox-3"
+            htmlFor="checkbox-2"
             className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
           >
-            I am 18 years or older
+            I want to get promotional offers
           </label>
         </div>
-
-        <div className="flex mb-4">
-          <div className="flex items-center h-5">
-            <input
-              id="helper-checkbox"
-              aria-describedby="helper-checkbox-text"
-              type="checkbox"
-              value=""
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-          </div>
-          <div className="ms-2 text-sm">
-            <label
-              for="helper-checkbox"
-              className="font-medium text-gray-900  dark:text-black"
-            >
-              Free shipping via Flowbite
-            </label>
-          </div>
-        </div>
-
-        <div className="flex items-center">
+        <div className="flex items-center mb-4">
           <input
-            id="international-shipping-disabled"
+            id="checkbox-2"
             type="checkbox"
             value=""
-            className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+            onChange={(e) => handleCheckboxClick(e.target.checked)}
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
           />
           <label
-            for="international-shipping-disabled"
-            className="ms-2 text-sm font-medium text-gray-400  dark:text-black"
+            htmlFor="checkbox-2"
+            className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
           >
-            Eligible for international shipping
+            I want to get promotional offers
+          </label>
+        </div>
+        <div className="flex items-center mb-4">
+          <input
+            id="checkbox-2"
+            type="checkbox"
+            value=""
+            onChange={(e) => handleCheckboxClick(e.target.checked)}
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          />
+          <label
+            htmlFor="checkbox-2"
+            className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
+          >
+            I want to get promotional offers
+          </label>
+        </div>
+        <div className="flex items-center mb-4">
+          <input
+            id="checkbox-2"
+            type="checkbox"
+            value=""
+            onChange={(e) => handleCheckboxClick(e.target.checked)}
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          />
+          <label
+            htmlFor="checkbox-2"
+            className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
+          >
+            I want to get promotional offers
+          </label>
+        </div>
+        <div className="flex items-center mb-4">
+          <input
+            id="checkbox-2"
+            type="checkbox"
+            value=""
+            onChange={(e) => handleCheckboxClick(e.target.checked)}
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          />
+          <label
+            htmlFor="checkbox-2"
+            className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
+          >
+            I want to get promotional offers
+          </label>
+        </div>
+        <div className="flex items-center mb-4">
+          <input
+            id="checkbox-2"
+            type="checkbox"
+            value=""
+            onChange={(e) => handleCheckboxClick(e.target.checked)}
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          />
+          <label
+            htmlFor="checkbox-2"
+            className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
+          >
+            I want to get promotional offers
+          </label>
+        </div>
+        <div className="flex items-center mb-4">
+          <input
+            id="checkbox-2"
+            type="checkbox"
+            value=""
+            onChange={(e) => handleCheckboxClick(e.target.checked)}
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          />
+          <label
+            htmlFor="checkbox-2"
+            className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
+          >
+            I want to get promotional offers
+          </label>
+        </div>
+        <div className="flex items-center mb-4">
+          <input
+            id="checkbox-2"
+            type="checkbox"
+            value=""
+            onChange={(e) => handleCheckboxClick(e.target.checked)}
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          />
+          <label
+            htmlFor="checkbox-2"
+            className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
+          >
+            I want to get promotional offers
           </label>
         </div>
       </fieldset>
+      <button
+        className="border border-black rounded p-1 m-1"
+        onClick={() => {
+          const headers = {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          };
+          const res = axios.put(
+            Admin_URL + "/update",
+            {
+              PO_num: PO_number,
+              data: count,
+            },
+            { headers }
+          );
+        }}
+      >
+        Submit
+      </button>
+      <a href="/adminlogin">
+        <LogoutButton className="border border-black rounded p-1 flex mt-10">
+          Log-out
+        </LogoutButton>
+      </a>
     </div>
   );
 }

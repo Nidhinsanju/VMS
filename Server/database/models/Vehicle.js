@@ -6,6 +6,8 @@ const VehiclesSchema = new mongoose.Schema({
   Purchase_Order: Number,
   Delivery_Challan: Number,
   VehicelImage: String,
+  CustomerID: Number,
+  Status: Number,
 });
 
 const Vehicles = mongoose.model("Vehicles", VehiclesSchema);

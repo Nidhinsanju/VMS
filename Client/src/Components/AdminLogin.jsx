@@ -2,15 +2,15 @@ import * as React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { SERVER_URL } from "../Constents/URL";
-function Login() {
+import { Admin_URL } from "../Constents/AdminUrl";
+export function AdminLogin() {
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
   const navigate = useNavigate();
   return (
     <div className="border border-black m-3">
       <form className="max-w-sm mx-auto" onSubmit={(e) => e.preventDefault()}>
-        Welcome back
+        Hello Team
         <div className="mb-5">
           <label
             htmlFor="email"
@@ -56,9 +56,6 @@ function Login() {
         >
           Submit
         </button>
-        <p>
-          New User...?<a href="/signup">Sign-Up</a>
-        </p>
       </form>
     </div>
   );
@@ -66,7 +63,7 @@ function Login() {
   async function submitData(e, username, password) {
     e.preventDefault();
     if (username !== undefined && password !== undefined) {
-      const res = await axios.post(SERVER_URL + "/login/", {
+      const res = await axios.post(Admin_URL + "/login/", {
         username: username,
         password: password,
       });
@@ -75,13 +72,10 @@ function Login() {
         return;
       }
       const token = res.data.token;
-      const CustomerID = res.data.user.CustomerID;
       localStorage.setItem("token", token);
-      localStorage.setItem("CustomerID", CustomerID);
-      navigate("/dashboard");
+      navigate("/secuirtycheck");
     } else {
       alert("username or passowrd not found");
     }
   }
 }
-export default Login;

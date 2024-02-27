@@ -50,10 +50,17 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/dashboard/status", async (req, res) => {
-  const PO_num = req.body.PO_num;
+  const { CustomerID } = req.body;
   try {
-    const vehicle = await Vehicles.findOne({ Purchase_Order: PO_num });
-    return res.status(200).json({ message: "Vehicle is Check-in ", vehicle });
+    const user = await User.findOne({ CustomerID: CustomerID });
+    const check_in = user?.Check_IN;
+    const vehicle = await Vehicles.findOne({ CustomerID: CustomerID });
+    if (vehicle) {
+      const Status = vehicle.Status;
+      return res
+        .status(200)
+        .json({ message: "Vehicle is Check-in ", Status, check_in });
+    }
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal server error" });
@@ -61,7 +68,7 @@ router.post("/dashboard/status", async (req, res) => {
 });
 
 router.put("/dashboard/checkin/", async (req, res) => {
-  const { VehicleNumber, DC_num, PO_num, VehicleImage, customerID } = req.body;
+  const { VehicleNumber, DC_num, PO_num, customerID } = req.body;
   try {
     const POnumber = await Vendors.findOne({ Purchase_Order: PO_num });
     if (POnumber) {
@@ -72,7 +79,8 @@ router.put("/dashboard/checkin/", async (req, res) => {
         TimeStamp: formattedDateAndTime,
         Purchase_Order: PO_num,
         Delivery_Challan: DC_num,
-        VehicelImage: VehicleImage,
+        CustomerID: customerID,
+        Status: null,
       });
       const user = await User.findOne({ CustomerID: customerID });
       user.Check_IN = true;

@@ -10,7 +10,7 @@ function Login() {
   return (
     <div className="border border-black m-3">
       <form className="max-w-sm mx-auto" onSubmit={(e) => e.preventDefault()}>
-        Welcome back
+        Join US
         <div className="mb-5">
           <label
             htmlFor="email"
@@ -57,7 +57,7 @@ function Login() {
           Submit
         </button>
         <p>
-          New User...?<a href="/signup">Sign-Up</a>
+          Existing User?<a href="/">Log-in</a>
         </p>
       </form>
     </div>
@@ -66,19 +66,15 @@ function Login() {
   async function submitData(e, username, password) {
     e.preventDefault();
     if (username !== undefined && password !== undefined) {
-      const res = await axios.post(SERVER_URL + "/login/", {
+      const res = await axios.post(SERVER_URL + "/signup/", {
         username: username,
         password: password,
       });
       if (res.status !== 200) {
-        alert("Invalid username or password");
+        alert("Something went wrong");
         return;
       }
-      const token = res.data.token;
-      const CustomerID = res.data.user.CustomerID;
-      localStorage.setItem("token", token);
-      localStorage.setItem("CustomerID", CustomerID);
-      navigate("/dashboard");
+      navigate("/");
     } else {
       alert("username or passowrd not found");
     }
