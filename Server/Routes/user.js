@@ -3,31 +3,65 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import { authenticateJwt } from "../middleware/auth.js";
 import Vendors from "../database/models/Vendor.js";
+import User from "../database/models/User.js";
+import Product from "../database/models/Product.js";
 
 const router = express.Router();
 const SECRET = process.env.secret;
 
 router.post("/login", async (req, res) => {
-  const { username, password } = req.body;
-  const pin = 123456;
-  if (username == "user@gmail.com" && password === pin) {
-    const token = jwt.sign({ username, role: "User" }, SECRET, {
-      expiresIn: "1h",
-    });
-    res.json({ message: "Logged in successfully ", token });
-  } else {
-    res.status(403).json({ message: "Invalid username or password" });
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username, password });
+    if (user) {
+      const token = jwt.sign({ username, role: "User" }, SECRET, {
+        expiresIn: "1h",
+      });
+      res.json({ message: "Logged in successfully ", token, user });
+    } else {
+      res.status(403).json({ message: "Invalid username or password" });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "internal server error" });
   }
 });
 
-// router.post("/checkin", authenticateJwt, async (req, res) => {
-//   const PO_num = req.body.PO_num;
-//   const Vehicle = await Vehicles.findOne({ Purchase_Order: PO_num });
-//   res.status(200).json({ Vehicle });
-// });
+router.post("/signup", async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const user = await User.findOne({ username });
+    if (user) {
+      return res.status(504).json({ message: "User already Exists" });
+    }
+    const customerID = Math.floor(Math.random() * 10);
+    const newUser = new User({
+      username: username,
+      password: password,
+      CustomerID: customerID,
+      Purchase_number: null,
+      Check_IN: false,
+    });
+    await newUser.save();
+    return res.status(200).json({ message: "New user created successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
 
-router.post("/dashboard/checkin/", async (req, res) => {
-  const { VehicleNumber, DC_num, PO_num, VehicleImage } = req.body;
+router.post("/dashboard/status", async (req, res) => {
+  const PO_num = req.body.PO_num;
+  try {
+    const vehicle = await Vehicles.findOne({ Purchase_Order: PO_num });
+    return res.status(200).json({ message: "Vehicle is Check-in ", vehicle });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.put("/dashboard/checkin/", async (req, res) => {
+  const { VehicleNumber, DC_num, PO_num, VehicleImage, customerID } = req.body;
   try {
     const POnumber = await Vendors.findOne({ Purchase_Order: PO_num });
     if (POnumber) {
@@ -40,6 +74,9 @@ router.post("/dashboard/checkin/", async (req, res) => {
         Delivery_Challan: DC_num,
         VehicelImage: VehicleImage,
       });
+      const user = await User.findOne({ CustomerID: customerID });
+      user.Check_IN = true;
+      await user.save();
       await newVehicle.save();
       return res.status(200).json({ POnumber });
     }

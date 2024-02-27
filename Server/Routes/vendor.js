@@ -1,12 +1,7 @@
 import express from "express";
 const router = express.Router();
 import Vendors from "../database/models/Vendor.js";
-
-router.post("/display/Details", async (req, res) => {
-  const PO_num = req.body.PO_num;
-  const Vendor = await Vendors.findOne({ Purchase_Order: PO_num });
-  res.status(200).json({ Vendor });
-});
+import Product from "../database/models/Product.js";
 
 router.post("/addvendor/", async (req, res) => {
   const { vendorName, vendorCompanyName, PO_number } = req.body;
@@ -20,11 +15,27 @@ router.post("/addvendor/", async (req, res) => {
       Vendor_Name: vendorName,
       Vendor_company_name: vendorCompanyName,
       Purchase_Order: PO_number,
+      Products: [],
     });
-    console.log(newVendor);
     await newVendor.save();
     res.status(200).json({ message: "vendor created successfully" });
   }
+});
+
+router.put("/addproducts", async (req, res) => {
+  const { ProductName, PurchaseOrder, ProductImage, Price, Quantity } =
+    req.body;
+  const vendor = await Vendors.findOne({ Purchase_Order: PurchaseOrder });
+  const newProduct = new Product({
+    Product_Name: ProductName,
+    Purchase_Order: PurchaseOrder,
+    ProductImage: ProductImage,
+    Price: Price,
+    Quantity: Quantity,
+  });
+  vendor.Products.push(newProduct);
+  await vendor.save();
+  return res.status(200).json({ message: "products added successfully" });
 });
 
 export default router;
