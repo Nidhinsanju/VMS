@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import userRouter from "./Routes/user.js";
+import vendorRouter from "./Routes/vendor.js";
+import adminRouter from "./Routes/Admin.js";
 
 dotenv.config();
 var app = express();
@@ -16,6 +18,8 @@ mongoose.connect(DATABASE_URL1, {
 });
 
 app.use("/user", userRouter);
+app.use("/vendor", vendorRouter);
+app.use("/admin", adminRouter);
 
 app.listen(PORT, function () {
   console.log("server is running on port ".concat(PORT));
