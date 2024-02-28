@@ -9,11 +9,6 @@ export default {
   },
   target: "node",
   module: {
-    rules: [
-      {
-        test: /\.(sass|less|css)$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
-      },
-    ],
+    rules: [{ test: /\.txt$/, use: "raw-loader" }],
   },
 };
