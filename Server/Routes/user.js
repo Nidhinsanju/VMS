@@ -86,7 +86,8 @@ router.put("/dashboard/checkin/", async (req, res) => {
         Status: 0,
       });
       const user = await User.findOne({ CustomerID: customerID });
-      // user.Check_IN = true;
+      user.Purchase_number = PO_num;
+      user.Check_IN = true;
       await user.save();
       await newVehicle.save();
       return res.status(200).json({ POnumber });

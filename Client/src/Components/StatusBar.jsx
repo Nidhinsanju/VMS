@@ -16,8 +16,10 @@ export default function StatusBar(props) {
           will update Your status here.
         </p>
       </a>
-      <div class="flex justify-between mb-1 mt-5">
-        <span class="text-base font-medium text-orange-600">Loading...</span>
+      <div className="flex justify-between mb-1 mt-5">
+        <span className="text-base font-medium text-orange-600">
+          Loading...
+        </span>
       </div>
       <div className="w-full  bg-gray-200 rounded-full dark:bg-gray-700">
         <div
@@ -45,8 +47,10 @@ export default function StatusBar(props) {
             your trust in our expertise.
           </p>
         </a>
-        <div class="flex mt-3 justify-between mb-1">
-          <span class="text-base font-medium  text-green-700">Completed!</span>
+        <div className="flex mt-3 justify-between mb-1">
+          <span className="text-base font-medium  text-green-700">
+            Completed!
+          </span>
         </div>
         <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
           <div

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import Details from "../Hooks/fetchDetails";
 import axios from "axios";
@@ -6,6 +6,7 @@ import { SERVER_URL } from "../Constents/URL";
 import { LogoutButton } from "../utis/LogoutButton";
 import StatusBar from "./StatusBar";
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [image, setImage] = useState("");
   const [status, setStatus] = useState("");
   const [Vehiclenum, setVehiclenum] = useState("");
@@ -16,6 +17,19 @@ export default function Dashboard() {
   const [data, setData] = useState("");
   const token = localStorage.getItem("token");
   const customerID = localStorage.getItem("CustomerID");
+  const memoizedValues = useMemo(
+    () => ({
+      image,
+      status,
+      Vehiclenum,
+      DC,
+      PO,
+      PO_num,
+      checkin,
+      data,
+    }),
+    [image, status, Vehiclenum, DC, PO, PO_num, checkin, data]
+  );
   useEffect(() => {
     const fetchuser = async () => {
       try {
@@ -25,10 +39,9 @@ export default function Dashboard() {
         setCheckin(user.data.check_in);
         setPO_num(user.data.PO_num);
         const percentage = (user.data.Status / 10) * 100;
-        console.log(percentage);
         setStatus(percentage);
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        alert("Something went Wrong");
       }
     };
     fetchuser();
@@ -37,17 +50,25 @@ export default function Dashboard() {
   if (token) {
     const SubmitData = async () => {
       try {
-        if (PO && DC && Vehiclenum) {
-          const res = await Details(PO, DC, Vehiclenum, customerID);
+        if (
+          memoizedValues?.PO &&
+          memoizedValues?.DC &&
+          memoizedValues?.Vehiclenum
+        ) {
+          const res = await Details(
+            memoizedValues?.PO,
+            memoizedValues?.DC,
+            memoizedValues?.Vehiclenum,
+            customerID
+          );
           setData(res.data.POnumber);
           return;
         }
         alert("invalid credentials ");
       } catch (error) {
-        console.log(error);
+        alert("Something went Wrong");
       }
     };
-
     const ImageUpload = (e) => {
       const rawimage = e.target.files && e.target.files[0];
       if (rawimage) {
@@ -62,10 +83,10 @@ export default function Dashboard() {
       return (
         <div className=" mt-10 flex w-full flex-col items-center justify-center h-1/2">
           <div className="flex-col w-2/5">
-            <StatusBar status={status} />
+            <StatusBar status={memoizedValues?.status} />
           </div>
           <dd className="text-black  text-lg italic">Puchase Order Number</dd>
-          <dt className=" text-3xl font-extrabold">{PO_num}</dt>
+          <dt className=" text-3xl font-extrabold">{memoizedValues?.PO_num}</dt>
         </div>
       );
     }
@@ -86,9 +107,13 @@ export default function Dashboard() {
             onChange={ImageUpload}
           />
           <figure className="mt-10 flex justify-center  max-h-72 max-w-85">
-            {image ? (
+            {memoizedValues.image ? (
               <div className="border  p-1 h-15 overflow-hidden">
-                <img src={image} alt="image" className="h-52 w-52" />
+                <img
+                  src={memoizedValues?.image}
+                  alt="image"
+                  className="h-52 w-52"
+                />
               </div>
             ) : null}
           </figure>
@@ -162,15 +187,18 @@ export default function Dashboard() {
       </div>
     );
   } else {
-    const navigate = useNavigate();
     alert("Login to Continue");
-    navigate("/");
+    useEffect(() => {
+      const navigateHome = () => {
+        navigate("/");
+      };
+      navigateHome();
+    }, [token]);
   }
 }
 
 function Display(props) {
   const data = props.data;
-  console.log(data);
   if (data) {
     return (
       <div className="mt-10 w-full flex-wrap flex flex-col ">
@@ -192,12 +220,12 @@ function Display(props) {
                   />
                   <div className="p-2">
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                      <p>{products?.Product_Name}</p>
+                      <span>{products?.Product_Name}</span>
                     </h5>
-                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                    <span className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                       <p>Price: {products?.Price}/-</p>
                       <p>Quanity: {products?.Quantity}</p>
-                    </p>
+                    </span>
                   </div>
                 </div>
               </div>

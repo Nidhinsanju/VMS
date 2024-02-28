@@ -65,7 +65,7 @@ function Login() {
 
   async function submitData(e, username, password) {
     e.preventDefault();
-    if (username !== undefined && password !== undefined) {
+    if (username === username.length > 0 && password === password.length > 0) {
       const res = await axios.post(SERVER_URL + "/signup/", {
         username: username,
         password: password,

@@ -20,7 +20,6 @@ function Login() {
           </label>
           <input
             type="text"
-            id="email"
             className="bg-gray-50 border  border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="user@gmail.com"
             onChange={(e) => {
@@ -38,7 +37,6 @@ function Login() {
           </label>
           <input
             type="password"
-            id="password"
             placeholder="123456"
             className="bg-gray-50 border border-black text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
@@ -65,20 +63,24 @@ function Login() {
 
   async function submitData(e, username, password) {
     e.preventDefault();
-    if (username !== undefined && password !== undefined) {
-      const res = await axios.post(SERVER_URL + "/login/", {
-        username: username,
-        password: password,
-      });
-      if (res.status !== 200) {
-        alert("Invalid username or password");
-        return;
+    if (username.length > 0 && password.length > 0) {
+      try {
+        const res = await axios.post(SERVER_URL + "/login/", {
+          username: username,
+          password: password,
+        });
+        if (res.status !== 200) {
+          alert("Invalid username or password");
+        } else {
+          const token = res.data.token;
+          const CustomerID = res.data.user.CustomerID;
+          localStorage.setItem("token", token);
+          localStorage.setItem("CustomerID", CustomerID);
+          navigate("/dashboard");
+        }
+      } catch (error) {
+        alert("An error occurred during login");
       }
-      const token = res.data.token;
-      const CustomerID = res.data.user.CustomerID;
-      localStorage.setItem("token", token);
-      localStorage.setItem("CustomerID", CustomerID);
-      navigate("/dashboard");
     } else {
       alert("username or passowrd not found");
     }
