@@ -110,6 +110,7 @@ router.put("/checkout", authenticateJwt, async (req, res) => {
       });
       const user = await User.findOne({ CustomerID: CustomerID });
       user.Check_IN = false;
+      user.Purchase_number = null;
       await user.save();
       return res.status(200).json({ message: "Checked out successfully" });
     }
