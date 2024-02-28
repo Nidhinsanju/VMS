@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import { authenticateJwt } from "../middleware/auth.js";
 import Vendors from "../database/models/Vendor.js";
 import User from "../database/models/User.js";
-import Product from "../database/models/Product.js";
 
 const router = express.Router();
 const SECRET = process.env.secret;
@@ -49,7 +48,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/dashboard/status", async (req, res) => {
+router.post("/dashboard/status", authenticateJwt, async (req, res) => {
   const { CustomerID } = req.body;
   try {
     const user = await User.findOne({ CustomerID: CustomerID });
@@ -68,7 +67,7 @@ router.post("/dashboard/status", async (req, res) => {
   }
 });
 
-router.put("/dashboard/checkin/", async (req, res) => {
+router.put("/dashboard/checkin/", authenticateJwt, async (req, res) => {
   const { VehicleNumber, DC_num, PO_num, customerID } = req.body;
   try {
     const POnumber = await Vendors.findOne({ Purchase_Order: PO_num })
@@ -101,7 +100,7 @@ router.put("/dashboard/checkin/", async (req, res) => {
   }
 });
 
-router.put("/checkout", async (req, res) => {
+router.put("/checkout", authenticateJwt, async (req, res) => {
   const { CustomerID } = req.body;
   try {
     const vehicle = await Vehicles.findOne({ CustomerID: CustomerID });
