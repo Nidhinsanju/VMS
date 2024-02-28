@@ -28,7 +28,11 @@
     "socks": "^2.8.1"
   },
   "devDependencies": {
-    "webpack": "^5.90.1",
+    "css-loader": "^6.10.0",
+    "sass": "^1.71.1",
+    "sass-loader": "^14.1.1",
+    "style-loader": "^3.3.4",
+    "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4"
   }
 }

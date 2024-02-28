@@ -8,4 +8,12 @@ export default {
     filename: "bundle.js",
   },
   target: "node",
+  module: {
+    rules: [
+      {
+        test: /\.(sass|less|css)$/,
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
+    ],
+  },
 };
