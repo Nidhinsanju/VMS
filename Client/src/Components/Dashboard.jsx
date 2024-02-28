@@ -32,10 +32,18 @@ export default function Dashboard() {
   );
   useEffect(() => {
     const fetchuser = async () => {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
       try {
-        const user = await axios.post(SERVER_URL + "/dashboard/status", {
-          CustomerID: customerID,
-        });
+        const user = await axios.post(
+          SERVER_URL + "/dashboard/status",
+          {
+            CustomerID: customerID,
+          },
+          { headers }
+        );
         setCheckin(user.data.check_in);
         setPO_num(user.data.PO_num);
         const percentage = (user.data.Status / 10) * 100;

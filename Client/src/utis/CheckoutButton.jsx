@@ -5,18 +5,26 @@ import axios from "axios";
 export function CheckoutButton() {
   const navigate = useNavigate();
   const customerID = localStorage.getItem("CustomerID");
+  const token = localStorage.getItem("token");
   const Checkout = async () => {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
     try {
-      const res = await axios.put(SERVER_URL + "/checkout", {
-        CustomerID: customerID,
-      });
+      const res = await axios.put(
+        SERVER_URL + "/checkout",
+        {
+          CustomerID: customerID,
+        },
+        { headers }
+      );
       if (res.status === 200) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("CustomerID");
         alert("Checked out Successfully");
         navigate("/");
       }
-      localStorage.removeItem("token");
-      localStorage.removeItem("CustomerID");
-      navigate("/");
     } catch (error) {
       console.log(error);
       alert("Something went wrong");

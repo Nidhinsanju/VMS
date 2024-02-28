@@ -4,10 +4,9 @@ import { Admin_URL } from "../Constents/AdminUrl";
 import { LogoutButton } from "../utis/LogoutButton";
 import Error from "./Errorpage";
 export default function SecurityCheck() {
+  const token = localStorage.getItem("token");
   const [PO_number, setPO_number] = useState("");
   const [count, setCount] = useState(0);
-  const token = localStorage.getItem("token");
-
   const handleCheckboxClick = (isChecked) => {
     setCount((prevCount) => (isChecked ? prevCount + 1 : prevCount - 1));
   };

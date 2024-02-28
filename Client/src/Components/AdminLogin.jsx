@@ -56,6 +56,9 @@ export function AdminLogin() {
         >
           Submit
         </button>
+        <a href="/" className="ml-10">
+          User login
+        </a>
       </form>
     </div>
   );
