@@ -57,9 +57,10 @@ router.post("/dashboard/status", async (req, res) => {
     const vehicle = await Vehicles.findOne({ CustomerID: CustomerID });
     if (vehicle) {
       const Status = vehicle.Status;
+      const PO_num = vehicle.Purchase_Order;
       return res
         .status(200)
-        .json({ message: "Vehicle is Check-in ", Status, check_in });
+        .json({ message: "Vehicle is Check-in ", Status, check_in, PO_num });
     }
   } catch (error) {
     console.log(error);

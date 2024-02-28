@@ -11,6 +11,7 @@ export default function Dashboard() {
   const [Vehiclenum, setVehiclenum] = useState("");
   const [DC, setDC] = useState("");
   const [PO, setPO] = useState("");
+  const [PO_num, setPO_num] = useState("");
   const [checkin, setCheckin] = useState("");
   const [data, setData] = useState("");
   const token = localStorage.getItem("token");
@@ -22,6 +23,7 @@ export default function Dashboard() {
           CustomerID: customerID,
         });
         setCheckin(user.data.check_in);
+        setPO_num(user.data.PO_num);
         const percentage = (user.data.Status / 10) * 100;
         console.log(percentage);
         setStatus(percentage);
@@ -58,13 +60,17 @@ export default function Dashboard() {
     };
     if (checkin) {
       return (
-        <div>
-          <StatusBar status={status} />
+        <div className=" mt-10 flex w-full flex-col items-center justify-center h-1/2">
+          <div className="flex-col w-2/5">
+            <StatusBar status={status} />
+          </div>
+          <dd class="text-black  text-lg italic">Puchase Order Number</dd>
+          <dt class=" text-3xl font-extrabold">{PO_num}</dt>
         </div>
       );
     }
     return (
-      <div className="mt-10  p-10">
+      <div className="  p-10">
         <form
           className="max-w-md mx-auto mt-10"
           onSubmit={(e) => {
@@ -79,10 +85,10 @@ export default function Dashboard() {
             type="file"
             onChange={ImageUpload}
           />
-          <figure className="mt-10 flex border max-h-72 max-w-85">
+          <figure className="mt-10 flex justify-center  max-h-72 max-w-85">
             {image ? (
-              <div className="border  p-2 h-15 overflow-hidden">
-                <img src={image} alt="image" className="h-32 w-32" />
+              <div className="border  p-1 h-15 overflow-hidden">
+                <img src={image} alt="image" className="h-52 w-52" />
               </div>
             ) : null}
           </figure>
@@ -141,14 +147,16 @@ export default function Dashboard() {
               Purchase Order number(P.O)
             </label>
           </div>
-
-          <button
-            type="submit"
-            onClick={() => SubmitData()}
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Submit
-          </button>
+          <div className="flex  items-center justify-between ">
+            <button
+              type="submit"
+              // onClick={() => SubmitData()}
+              className="focus:outline-none text-white bg-blue-600 hover:bg-blue-600 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Submit
+            </button>
+            <LogoutButton />
+          </div>
         </form>
         {data ? <Display data={data} /> : <Display />}
       </div>
