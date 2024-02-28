@@ -1,5 +1,7 @@
 import { LogoutButton } from "../utis/LogoutButton";
+import SERVER_URL from "../Constents/URL.js";
 export default function StatusBar(props) {
+  const customerID = localStorage.getItem("CustomerID");
   const status = props.status;
   const commonContent = (
     <div className="mt-3 justify-center  ">
@@ -62,6 +64,14 @@ export default function StatusBar(props) {
         </div>
         <a href="/">
           <button
+            onClick={() => {
+              const res = axios.put(SERVER_URL + "/checkout", {
+                CustomerID: customerID,
+              });
+              if (res.status === 200) {
+                alert("Checked-Out Successfully");
+              }
+            }}
             type="button"
             className="text-white mt-3 bg-blue-700 : focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           >
