@@ -1,5 +1,6 @@
 // webpack.config.js
 import path from "path";
+
 export default {
   mode: "production",
   entry: "./index.js",
@@ -9,6 +10,9 @@ export default {
   },
   target: "node",
   module: {
-    rules: [{ test: /\.txt$/, use: "raw-loader" }],
+    rules: [
+      { test: /\.ts$/, loader: "ts-loader" },
+      { test: /\.node$/, use: "node-loader" },
+    ],
   },
 };
