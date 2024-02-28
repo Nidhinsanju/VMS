@@ -64,8 +64,8 @@ export default function Dashboard() {
           <div className="flex-col w-2/5">
             <StatusBar status={status} />
           </div>
-          <dd class="text-black  text-lg italic">Puchase Order Number</dd>
-          <dt class=" text-3xl font-extrabold">{PO_num}</dt>
+          <dd className="text-black  text-lg italic">Puchase Order Number</dd>
+          <dt className=" text-3xl font-extrabold">{PO_num}</dt>
         </div>
       );
     }
@@ -92,7 +92,7 @@ export default function Dashboard() {
               </div>
             ) : null}
           </figure>
-          <div className="relative z-0 w-full mb-5 group mt-8 text-black">
+          <div className="relative z-0 w-full mb-5 group  text-black">
             <input
               type="text"
               className="block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -150,7 +150,7 @@ export default function Dashboard() {
           <div className="flex  items-center justify-between ">
             <button
               type="submit"
-              // onClick={() => SubmitData()}
+              onClick={() => SubmitData()}
               className="focus:outline-none text-white bg-blue-600 hover:bg-blue-600 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Submit
@@ -170,25 +170,42 @@ export default function Dashboard() {
 
 function Display(props) {
   const data = props.data;
+  console.log(data);
   if (data) {
     return (
-      <div>
-        <p>Vendor Name: {data?.Vendor_Name}</p>
-        <p>Purchase Order: {data?.Purchase_Order}</p>
-        <p>Company Name: {data?.Vendor_company_name}</p>
-        <p>
-          Product List:{" "}
-          {data?.Products.map((product) => {
-            return (
-              <div>
-                <h1>{product.Product_Name}</h1>
+      <div className="mt-10 w-full flex-wrap flex flex-col ">
+        <h5 className="text-xl font-bold text-black">
+          Brand:{data?.Vendor_Name}
+        </h5>
+        <h6 className="text-lg font-bold dark:text-black">
+          {data?.Vendor_company_name}
+        </h6>
+        {data?.Products && data?.Products.length > 0 ? (
+          <div className="w-full flex flex-row  flex-wrap ">
+            {data?.Products.map((products, index) => (
+              <div key={index} className="flex flex-row ">
+                <div className=" rounded-lg shadow dark:bg-gray-800 m-3 flex flex-wrap  dark:border-gray-700">
+                  <img
+                    className="p-2 rounded-t-lg max-h-48  min-w-80  max-w-full min-h-40 "
+                    src={products?.ProductImage}
+                    alt="image"
+                  />
+                  <div className="p-2">
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                      <p>{products?.Product_Name}</p>
+                    </h5>
+                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                      <p>Price: {products?.Price}/-</p>
+                      <p>Quanity: {products?.Quantity}</p>
+                    </p>
+                  </div>
+                </div>
               </div>
-            );
-          })}
-        </p>
-        <div>
-          <p>Processing....</p>
-        </div>
+            ))}
+          </div>
+        ) : (
+          <p>No products available</p>
+        )}
       </div>
     );
   }

@@ -71,7 +71,9 @@ router.post("/dashboard/status", async (req, res) => {
 router.put("/dashboard/checkin/", async (req, res) => {
   const { VehicleNumber, DC_num, PO_num, customerID } = req.body;
   try {
-    const POnumber = await Vendors.findOne({ Purchase_Order: PO_num });
+    const POnumber = await Vendors.findOne({ Purchase_Order: PO_num })
+      .populate("Products")
+      .exec();
     if (POnumber) {
       const currentDateAndTime = new Date();
       const formattedDateAndTime = currentDateAndTime.toLocaleString();
@@ -84,7 +86,7 @@ router.put("/dashboard/checkin/", async (req, res) => {
         Status: 0,
       });
       const user = await User.findOne({ CustomerID: customerID });
-      user.Check_IN = true;
+      // user.Check_IN = true;
       await user.save();
       await newVehicle.save();
       return res.status(200).json({ POnumber });
