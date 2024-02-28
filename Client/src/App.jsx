@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./Components/Dashboard";
 import SecurityCheck from "./Components/SecurityChecks";
 import Signup from "./Components/Signup";
+import StatusBar from "./Components/StatusBar";
 import { AdminLogin } from "./Components/AdminLogin";
 function App() {
   return (

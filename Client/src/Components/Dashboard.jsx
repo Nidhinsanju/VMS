@@ -4,6 +4,7 @@ import Details from "../Hooks/fetchDetails";
 import axios from "axios";
 import { SERVER_URL } from "../Constents/URL";
 import { LogoutButton } from "../utis/LogoutButton";
+import StatusBar from "./StatusBar";
 export default function Dashboard() {
   const [image, setImage] = useState("");
   const [status, setStatus] = useState("");
@@ -16,11 +17,17 @@ export default function Dashboard() {
   const customerID = localStorage.getItem("CustomerID");
   useEffect(() => {
     const fetchuser = async () => {
-      const user = await axios.post(SERVER_URL + "/dashboard/status", {
-        CustomerID: customerID,
-      });
-      setCheckin(user.data.check_in);
-      setStatus(user.data.Status);
+      try {
+        const user = await axios.post(SERVER_URL + "/dashboard/status", {
+          CustomerID: customerID,
+        });
+        setCheckin(user.data.check_in);
+        const percentage = (user.data.Status / 10) * 100;
+        console.log(percentage);
+        setStatus(percentage);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
     };
     fetchuser();
   }, [customerID]);
@@ -31,7 +38,6 @@ export default function Dashboard() {
         if (PO && DC && Vehiclenum) {
           const res = await Details(PO, DC, Vehiclenum, customerID);
           setData(res.data.POnumber);
-          console.log(data);
           return;
         }
         alert("invalid credentials ");
@@ -51,24 +57,9 @@ export default function Dashboard() {
       }
     };
     if (checkin) {
-      const presentStatus = status;
-      if (presentStatus === 10) {
-        return (
-          <div>
-            <a href="/">
-              <button>Check-out</button>
-            </a>
-          </div>
-        );
-      }
       return (
         <div>
-          <h2>{presentStatus}</h2>
-          <h1>hi</h1>
-
-          <a href="/">
-            <LogoutButton />
-          </a>
+          <StatusBar status={status} />
         </div>
       );
     }

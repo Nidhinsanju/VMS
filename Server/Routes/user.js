@@ -80,7 +80,7 @@ router.put("/dashboard/checkin/", async (req, res) => {
         Purchase_Order: PO_num,
         Delivery_Challan: DC_num,
         CustomerID: customerID,
-        Status: null,
+        Status: 0,
       });
       const user = await User.findOne({ CustomerID: customerID });
       user.Check_IN = true;
