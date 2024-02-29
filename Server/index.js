@@ -13,10 +13,15 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(DATABASE_URL1, {
-  dbName: "VMS",
-});
-
+const connectDB = async () => {
+  try {
+    mongoose.connect(DATABASE_URL1, {
+      dbName: "VMS",
+    });
+  } catch (error) {
+    process.exit(1);
+  }
+};
 app.get("/test", async (req, res) => {
   try {
     res.status(200).json({ message: "Hi there im running" });
@@ -29,6 +34,8 @@ app.use("/user", userRouter);
 app.use("/vendor", vendorRouter);
 app.use("/admin", adminRouter);
 
-app.listen(PORT, function () {
-  console.log("server is running on port ".concat(PORT));
+connectDB().then(() => {
+  app.listen(PORT, function () {
+    console.log("server is running on port ".concat(PORT));
+  });
 });
