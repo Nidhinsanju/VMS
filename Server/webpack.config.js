@@ -1,4 +1,3 @@
-// webpack.config.js
 import path from "path";
 
 export default {
@@ -6,13 +5,14 @@ export default {
   entry: "./index.js",
   output: {
     path: path.resolve(process.cwd(), "dist"),
-    filename: "bundle.js",
+    publicPath: "/",
+    filename: "final.js",
   },
-  target: "node",
   module: {
     rules: [
       { test: /\.ts$/, loader: "ts-loader" },
       { test: /\.node$/, use: "node-loader" },
     ],
   },
+  target: "node",
 };
