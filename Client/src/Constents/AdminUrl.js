@@ -1,1 +1,1 @@
-export const Admin_URL = "http://localhost:3000/admin";
+export const Admin_URL = import.meta.env.VITE_ADMIN_URL;
