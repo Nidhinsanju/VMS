@@ -1,7 +1,7 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import Vendors from "../database/models/Vendor.js";
-import Product from "../database/models/Product.js";
+const Vendors = require("../database/models/Vendor.js");
+const Product = require("../database/models/Product.js");
 
 router.post("/addvendor/", async (req, res) => {
   const { vendorName, vendorCompanyName, PO_number } = req.body;
@@ -38,4 +38,4 @@ router.put("/addproducts", async (req, res) => {
   return res.status(200).json({ message: "products added successfully" });
 });
 
-export default router;
+module.exports = router;

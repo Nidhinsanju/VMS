@@ -1,10 +1,10 @@
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
 dotenv.config();
 
 const SECRET = process.env.secret; // This should be in an environment variable in a real application
 
-export const authenticateJwt = (req, res, next) => {
+exports.authenticateJwt = (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
 

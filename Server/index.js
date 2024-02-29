@@ -1,15 +1,15 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import mongoose from "mongoose";
-import userRouter from "./Routes/user.js";
-import vendorRouter from "./Routes/vendor.js";
-import adminRouter from "./Routes/Admin.js";
+const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const userRouter = require("./Routes/user.js");
+const vendorRouter = require("./Routes/vendor.js");
+const adminRouter = require("./Routes/Admin.js");
 
 dotenv.config();
-var app = express();
-var DATABASE_URL1 = process.env.dataBaseUrl;
-var PORT = process.env.PORT || 3000;
+const app = express();
+const DATABASE_URL1 = process.env.dataBaseUrl;
+const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 

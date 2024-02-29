@@ -1,9 +1,9 @@
-import Vehicles from "../database/models/Vehicle.js";
-import express from "express";
-import jwt from "jsonwebtoken";
-import { authenticateJwt } from "../middleware/auth.js";
-import Vendors from "../database/models/Vendor.js";
-import User from "../database/models/User.js";
+const Vehicles = require("../database/models/Vehicle.js");
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const { authenticateJwt } = require("../middleware/auth.js");
+const Vendors = require("../database/models/Vendor.js");
+const User = require("../database/models/User.js");
 
 const router = express.Router();
 const SECRET = process.env.secret;
@@ -121,4 +121,4 @@ router.put("/checkout", authenticateJwt, async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

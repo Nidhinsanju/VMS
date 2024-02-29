@@ -1,7 +1,7 @@
-import Vehicles from "../database/models/Vehicle.js";
-import express from "express";
-import jwt from "jsonwebtoken";
-import { authenticateCheck } from "../middleware/adminAuth.js";
+const Vehicles = require("../database/models/Vehicle.js");
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const { authenticateCheck } = require("../middleware/adminAuth.js");
 const router = express.Router();
 const SECRET = process.env.superSercet;
 
@@ -31,4 +31,4 @@ router.put("/update", authenticateCheck, async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 });
-export default router;
+module.exports = router;
