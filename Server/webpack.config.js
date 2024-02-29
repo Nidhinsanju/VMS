@@ -25,5 +25,8 @@ module.exports = {
       kerberos: false,
       "supports-color": false,
     },
+    fallback: {
+      "@mongodb-js/zstd": false,
+    },
   },
 };
