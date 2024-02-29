@@ -17,6 +17,14 @@ mongoose.connect(DATABASE_URL1, {
   dbName: "VMS",
 });
 
+app.get("/test", async (req, res) => {
+  try {
+    res.status(200).json({ message: "Hi there im running" });
+  } catch (error) {
+    res.status(404).json({ message: "Error" });
+  }
+});
+
 app.use("/user", userRouter);
 app.use("/vendor", vendorRouter);
 app.use("/admin", adminRouter);
