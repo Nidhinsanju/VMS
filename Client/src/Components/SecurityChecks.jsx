@@ -39,7 +39,7 @@ export default function SecurityCheck() {
                 htmlFor="checkbox-2"
                 className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
               >
-                I want to get promotional offers
+                Tires Good
               </label>
             </div>
             <div className="flex p-2 items-center mb-4">
@@ -54,7 +54,7 @@ export default function SecurityCheck() {
                 htmlFor="checkbox-2"
                 className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
               >
-                I want to get promotional offers
+                Engine Oil
               </label>
             </div>
             <div className="flex p-2 items-center mb-4">
@@ -69,7 +69,7 @@ export default function SecurityCheck() {
                 htmlFor="checkbox-2"
                 className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
               >
-                I want to get promotional offers
+                Wiper Fluid Refilled
               </label>
             </div>
             <div className="flex p-2 items-center mb-4">
@@ -84,7 +84,7 @@ export default function SecurityCheck() {
                 htmlFor="checkbox-2"
                 className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
               >
-                I want to get promotional offers
+                Suspensions Good
               </label>
             </div>
             <div className="flex p-2 items-center mb-4">
@@ -99,7 +99,7 @@ export default function SecurityCheck() {
                 htmlFor="checkbox-2"
                 className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
               >
-                I want to get promotional offers
+                Water Wash
               </label>
             </div>
             <div className="flex p-2 items-center mb-4">
@@ -114,7 +114,7 @@ export default function SecurityCheck() {
                 htmlFor="checkbox-2"
                 className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
               >
-                I want to get promotional offers
+                Break Oil Refilled
               </label>
             </div>
             <div className="flex p-2 items-center mb-4">
@@ -129,7 +129,7 @@ export default function SecurityCheck() {
                 htmlFor="checkbox-2"
                 className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
               >
-                I want to get promotional offers
+                Replacements Done
               </label>
             </div>
             <div className="flex p-2 items-center mb-4">
@@ -144,7 +144,7 @@ export default function SecurityCheck() {
                 htmlFor="checkbox-2"
                 className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
               >
-                I want to get promotional offers
+                General check-up
               </label>
             </div>
             <div className="flex p-2 items-center mb-4">
@@ -159,7 +159,7 @@ export default function SecurityCheck() {
                 htmlFor="checkbox-2"
                 className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
               >
-                I want to get promotional offers
+                Customer complaints checked
               </label>
             </div>
             <div className="flex p-2 items-center mb-4">
@@ -174,7 +174,7 @@ export default function SecurityCheck() {
                 htmlFor="checkbox-2"
                 className="ms-2 text-sm font-medium text-gray-900 dark:text-black"
               >
-                I want to get promotional offers
+                Ready for Delivery
               </label>
             </div>
           </fieldset>
