@@ -193,9 +193,7 @@ export default function SecurityCheck() {
                 },
                 { headers }
               );
-              if (res.status !== 200) {
-                alert("Something went wrong");
-              }
+
               alert("Updated Successfully");
             }}
           >
